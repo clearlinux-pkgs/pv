@@ -4,7 +4,7 @@
 #
 Name     : pv
 Version  : 1.6.6
-Release  : 2
+Release  : 3
 URL      : http://ivarch.com/programs/sources/pv-1.6.6.tar.bz2
 Source0  : http://ivarch.com/programs/sources/pv-1.6.6.tar.bz2
 Summary  : Monitor the progress of data through a pipe
