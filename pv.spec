@@ -4,16 +4,17 @@
 #
 Name     : pv
 Version  : 1.6.6
-Release  : 3
+Release  : 4
 URL      : http://ivarch.com/programs/sources/pv-1.6.6.tar.bz2
 Source0  : http://ivarch.com/programs/sources/pv-1.6.6.tar.bz2
 Summary  : Monitor the progress of data through a pipe
 Group    : Development/Tools
 License  : Artistic-2.0
-Requires: pv-bin
-Requires: pv-license
-Requires: pv-locales
-Requires: pv-man
+Requires: pv-bin = %{version}-%{release}
+Requires: pv-license = %{version}-%{release}
+Requires: pv-locales = %{version}-%{release}
+Requires: pv-man = %{version}-%{release}
+BuildRequires : intltool-dev
 
 %description
 PV ("Pipe Viewer") is a tool for monitoring the progress of data through a
@@ -25,8 +26,7 @@ will be until completion.
 %package bin
 Summary: bin components for the pv package.
 Group: Binaries
-Requires: pv-license
-Requires: pv-man
+Requires: pv-license = %{version}-%{release}
 
 %description bin
 bin components for the pv package.
@@ -58,21 +58,30 @@ man components for the pv package.
 
 %prep
 %setup -q -n pv-1.6.6
+cd %{_builddir}/pv-1.6.6
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1534539248
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604354416
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1534539248
+export SOURCE_DATE_EPOCH=1604354416
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/pv
-cp doc/COPYING %{buildroot}/usr/share/doc/pv/doc_COPYING
+mkdir -p %{buildroot}/usr/share/package-licenses/pv
+cp %{_builddir}/pv-1.6.6/doc/COPYING %{buildroot}/usr/share/package-licenses/pv/11a7758de1fddbec15253d48b4de52e96974425f
 %make_install
 %find_lang pv
 
@@ -84,11 +93,11 @@ cp doc/COPYING %{buildroot}/usr/share/doc/pv/doc_COPYING
 /usr/bin/pv
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/pv/doc_COPYING
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/pv/11a7758de1fddbec15253d48b4de52e96974425f
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man1/pv.1
 
 %files locales -f pv.lang
