@@ -1,5 +1,5 @@
 PKG_NAME := pv
-URL = http://www.ivarch.com/programs/sources/pv-1.6.20.tar.gz
+URL = https://www.ivarch.com/programs/sources/pv-1.8.10.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common

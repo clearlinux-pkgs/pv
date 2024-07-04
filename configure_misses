@@ -1,2 +1,4 @@
-Configure miss: main in -li
-Configure miss: main in -lintl
+Configure miss: 32-bit host C ABI
+Configure miss: 32-bit host C ABI
+Configure miss: CFLocaleCopyPreferredLanguages
+Configure miss: CFLocaleCopyPreferredLanguages
